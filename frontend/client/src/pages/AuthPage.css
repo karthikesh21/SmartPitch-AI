@@ -137,8 +137,18 @@
   color: rgba(255,255,255,0.35);
   margin-top: 8px;
   transition: color .2s;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
 }
 .auth-forgot:hover { color: #FF6B35; }
+.auth-forgot:focus {
+  outline: 2px solid #FF6B35;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 
 .auth-terms {
   font-size: 0.75rem;

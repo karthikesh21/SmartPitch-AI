@@ -59,7 +59,9 @@ const LoginPage = () => {
           </button>
         </form>
 
-        <a href="#" className="auth-forgot">Forgot password?</a>
+        <button type="button" className="auth-forgot" onClick={() => console.log('Forgot password functionality')}>
+          Forgot password?
+        </button>
         <div className="auth-divider"><span>or</span></div>
         <p className="auth-switch">
           Don't have an account? <Link to="/signup">Sign Up Free</Link>

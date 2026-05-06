@@ -2,7 +2,7 @@ const Groq = require("groq-sdk");
 
 class AIService {
   constructor() {
-    this.groq = new Groq({ apiKey: process.env.OPENAI_API_KEY });
+    this.groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
   }
 
   async generatePitch(product, audience, framework = "AIDA") {
@@ -38,19 +38,19 @@ Return EXACTLY this JSON (no extra text):
   },
   "linkedin": {
     "hook": "bold opening line max 15 words",
-    "benefit": "1-2 sentences on tangible benefit for their role",
+    "benefit": "1-3 sentences on tangible benefit for their role",
     "cta": "soft conversational CTA"
   },
   "coldCall": {
     "opening": "warm confident opener using [Name] placeholder",
     "problemId": "open-ended question to surface the problem",
-    "pitch": "2-sentence pitch connecting problem to solution",
+    "pitch": "3-sentence pitch connecting problem to solution",
     "objection": "empathetic 1-line response to not interested",
     "closing": "concrete next step ask"
   },
   "adCopy": {
     "headline": "punchy headline under 8 words",
-    "body": "2-3 lines: emotional hook, benefit, urgency",
+    "body": "3-4 lines: emotional hook, benefit, urgency",
     "cta": "action button text 3-5 words"
   }
 }`;

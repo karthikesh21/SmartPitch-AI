@@ -6,23 +6,47 @@ import './AuthPage.css';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
-  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
+  const { login, signup } = useAuth();
+
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirm: ''
+  });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
-
-  const { signup } = useAuth();
+  const set = (key, value) => {
+    setForm(prev => ({ ...prev, [key]: value }));
+  };
 
   const submit = (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.password) { setError('Please fill in all required fields.'); return; }
-    if (form.password !== form.confirm) { setError('Passwords do not match.'); return; }
-    if (form.password.length < 6) { setError('Password must be at least 6 characters.'); return; }
-    setLoading(true); setError('');
+
+    // Validation
+    if (!form.name || !form.email || !form.password) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+
+    if (form.password !== form.confirm) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    if (form.password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
     setTimeout(() => {
       const result = signup(form.email, form.password, form.name);
+
       if (result.success) {
         login(form.email, form.password);
         navigate('/generator');
@@ -44,36 +68,74 @@ const SignUpPage = () => {
         <div className="auth-logo" onClick={() => navigate('/')}>
           <BrandLogo size={34} fontSize="1.2rem" fontWeight={800} gap="10px" />
         </div>
+
         <h1>Create account</h1>
-        <p className="auth-sub">Start generating AI-powered pitches for free</p>
+        <p className="auth-sub">
+          Start generating AI-powered pitches for free
+        </p>
 
         <form onSubmit={submit} className="auth-form">
           <div className="auth-field">
             <label>Full Name</label>
-            <input type="text" placeholder="John Smith" value={form.name} onChange={e => set('name', e.target.value)} />
+            <input
+              type="text"
+              placeholder="John Smith"
+              value={form.name}
+              onChange={(e) => set('name', e.target.value)}
+            />
           </div>
+
           <div className="auth-field">
             <label>Email</label>
-            <input type="email" placeholder="you@company.com" value={form.email} onChange={e => set('email', e.target.value)} autoComplete="email" />
+            <input
+              type="email"
+              placeholder="you@company.com"
+              value={form.email}
+              onChange={(e) => set('email', e.target.value)}
+              autoComplete="email"
+            />
           </div>
+
           <div className="auth-field">
             <label>Password</label>
-            <input type="password" placeholder="Min. 6 characters" value={form.password} onChange={e => set('password', e.target.value)} />
+            <input
+              type="password"
+              placeholder="Min. 6 characters"
+              value={form.password}
+              onChange={(e) => set('password', e.target.value)}
+            />
           </div>
+
           <div className="auth-field">
             <label>Confirm Password</label>
-            <input type="password" placeholder="••••••••" value={form.confirm} onChange={e => set('confirm', e.target.value)} />
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={form.confirm}
+              onChange={(e) => set('confirm', e.target.value)}
+            />
           </div>
 
           {error && <div className="auth-error">{error}</div>}
+
           <button type="submit" className="auth-btn" disabled={loading}>
             {loading ? <span className="auth-spinner" /> : 'Create Account →'}
           </button>
         </form>
 
-        <p className="auth-terms">By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
-        <div className="auth-divider"><span>or</span></div>
-        <p className="auth-switch">Already have an account? <Link to="/login">Sign In</Link></p>
+        <p className="auth-terms">
+          By signing up you agree to our{' '}
+          <Link to="/terms">Terms</Link> and{' '}
+          <Link to="/privacy">Privacy Policy</Link>.
+        </p>
+
+        <div className="auth-divider">
+          <span>or</span>
+        </div>
+
+        <p className="auth-switch">
+          Already have an account? <Link to="/login">Sign In</Link>
+        </p>
       </div>
     </div>
   );

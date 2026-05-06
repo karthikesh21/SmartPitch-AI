@@ -7,7 +7,7 @@ import ClickSpark from '../components/Effects/ClickSpark';
 import BrandLogo from '../components/Layout/BrandLogo';
 import './GeneratorPage.css';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 const API = `${API_BASE_URL}/pitch/cold-mail`;
 
 const MailIcon = () => (

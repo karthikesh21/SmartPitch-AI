@@ -1,32 +1,41 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: { 'Content-Type': 'application/json' }
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// Request interceptor
+
 api.interceptors.request.use(
-  config => config,
-  error => Promise.reject(error)
+  (config) => {
+    return config;
+  },
+  (error) => Promise.reject(error)
 );
 
-// Response interceptor
 api.interceptors.response.use(
-  response => response.data,
-  error => Promise.reject(error.response?.data || error)
+  (response) => response.data,
+  (error) => {
+    console.error("API Error:", error.response || error);
+    return Promise.reject(error.response?.data || error.message);
+  }
 );
+
 
 export const pitchAPI = {
-  generate: (payload) => api.post('/pitch/generate', payload),
-  getHistory: () => api.get('/pitch/history'),
+  generate: (payload) => api.post("/pitch/generate", payload),
+  getHistory: () => api.get("/pitch/history"),
   deleteHistory: (id) => api.delete(`/pitch/history/${id}`),
 };
 
 export const linkedInAPI = {
-  optimize: (payload) => api.post('/linkedin/optimize', payload),
+  optimize: (payload) => api.post("/linkedin/optimize", payload),
 };
 
 export default api;
